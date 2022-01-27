@@ -113,7 +113,7 @@
 
 (defn migrate-up-if-needed!
   "Run any unrun `liquibase` migrations, if needed."
-  [conn, ^Liquibase liquibase]
+  [_conn, ^Liquibase liquibase]
   (log/info (trs "Checking if Database has unrun migrations..."))
   (when (has-unrun-migrations? liquibase)
     (log/info (trs "Database has unrun migrations. Waiting for migration lock to be cleared..."))

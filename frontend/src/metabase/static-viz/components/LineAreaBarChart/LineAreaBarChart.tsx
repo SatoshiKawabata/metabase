@@ -52,8 +52,8 @@ const LineAreaBarChart = ({
       series={series}
       settings={adjustedSettings}
       style={chartStyle}
-      width={540}
-      height={300}
+      width={640}
+      height={440}
     />
   );
 };

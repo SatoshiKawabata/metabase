@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "grid-styled";
+import _ from "underscore";
 import Heading from "metabase/components/type/Heading";
 import Subhead from "metabase/components/type/Subhead";
 import Text from "metabase/components/type/Text";
@@ -589,6 +590,36 @@ export default function StaticVizPage() {
                     ["Roderick Herman", 40],
                     ["Ruth Dougherty", 65],
                   ],
+                },
+              ],
+            }}
+          />
+        </Box>
+
+        <Box py={3}>
+          <Subhead>Ordinal chart with 80 items</Subhead>
+          <StaticChart
+            type="combo-chart"
+            options={{
+              settings: {
+                x: {
+                  type: "ordinal",
+                },
+                y: {
+                  type: "linear",
+                },
+                labels: {
+                  left: "Count",
+                  bottom: "Date",
+                },
+              },
+              series: [
+                {
+                  name: "bar series",
+                  color: "#509ee3",
+                  yAxisPosition: "left",
+                  type: "bar",
+                  data: _.range(60).map(n => [`bar ${n + 1}`, n + 1]),
                 },
               ],
             }}

@@ -99,10 +99,10 @@ export const getXTickProps = (
 
   const textBaseline = Math.floor(tickFontSize / 2);
   const transform = shouldRotate
-    ? `rotate(45, ${props.x} ${props.y}) translate(-${textBaseline} 0)`
+    ? `rotate(-45, ${props.x} ${props.y}) translate(${textBaseline}, 0)`
     : undefined;
 
-  const textAnchor = shouldRotate ? "start" : "middle";
+  const textAnchor = shouldRotate ? "end" : "middle";
 
   return { ...props, transform, children: value, textAnchor };
 };

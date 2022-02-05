@@ -41,7 +41,7 @@ export default class LeafletGridHeatMap extends LeafletMap {
 
     try {
       const { gridLayer } = this;
-      const { points, min, max } = this.props;
+      const { points, min, max, settings } = this.props;
 
       const { latitudeColumn, longitudeColumn } = this._getLatLonColumns();
       if (
@@ -53,11 +53,16 @@ export default class LeafletGridHeatMap extends LeafletMap {
 
       const { latitudeIndex, longitudeIndex } = this._getLatLonIndexes();
 
+      const colors = settings["map.colors"] || [
+        d3.rgb(color("success")),
+        d3.rgb(color("error")),
+      ];
+
       const colorScale = d3.scale
         .linear()
         .domain([min, max])
         .interpolate(d3.interpolateHcl)
-        .range([d3.rgb(color("success")), d3.rgb(color("error"))]);
+        .range([colors[0], colors[colors.length - 1]]);
 
       const gridSquares = gridLayer.getLayers();
       const totalSquares = Math.max(points.length, gridSquares.length);

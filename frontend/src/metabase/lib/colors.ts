@@ -112,10 +112,10 @@ function syncDeprecatedColorFamilies() {
   normal.purple = saturated.purple = desaturated.purple = colors["accent2"];
   normal.red = saturated.red = desaturated.red = colors["accent3"];
   normal.yellow = saturated.yellow = desaturated.yellow = colors["accent4"];
-  normal.orange = colors["accent5"];
-  normal.teal = colors["accent6"];
-  normal.indigo = colors["accent7"];
-  normal.gray = colors["text-dark"];
+  normal.orange = saturated.orange = desaturated.orange = colors["accent5"];
+  normal.teal = saturated.teal = desaturated.teal = colors["accent6"];
+  normal.indigo = saturated.indigo = desaturated.indigo = colors["accent7"];
+  normal.gray = saturated.gray = desaturated.gray = colors["text-dark"];
   normal.grey1 = colors["text-light"];
   normal.grey2 = colors["text-medium"];
   normal.grey3 = colors["text-dark"];

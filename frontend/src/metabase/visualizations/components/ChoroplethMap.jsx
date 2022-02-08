@@ -56,6 +56,21 @@ export function getColorplethColorScale(
   return colors;
 }
 
+export function getColorGradation(color1, color2) {
+  const leftColor = Color(color1);
+
+  const rightColor = Color(color2);
+
+  const scale = d3.scale
+    .linear()
+    .domain([0, 1])
+    .range([leftColor.string(), rightColor.string()]);
+
+  const colors = d3.range(0, 1.25, 0.25).map(value => scale(value));
+
+  return colors;
+}
+
 const geoJsonCache = new Map();
 function loadGeoJson(geoJsonPath, callback) {
   if (geoJsonCache.has(geoJsonPath)) {

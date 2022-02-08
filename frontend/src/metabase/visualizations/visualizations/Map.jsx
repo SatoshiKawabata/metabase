@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { t } from "ttag";
 import ChoroplethMap, {
   getColorplethColorScale,
+  getColorGradation,
 } from "../components/ChoroplethMap";
 import PinMap from "../components/PinMap";
 import LeafletGridHeatMap from "../components/LeafletGridHeatMap";
@@ -31,9 +32,14 @@ import _ from "underscore";
 
 const PIN_MAP_TYPES = new Set(["pin", "heat", "grid"]);
 
-import { desaturated } from "metabase/lib/colors";
+import { desaturated, color } from "metabase/lib/colors";
 
 import ColorRangePicker from "metabase/components/ColorRangePicker";
+
+const COLOR_RANGES = [
+  ...Object.values(desaturated).map(color => getColorplethColorScale(color)),
+  getColorGradation(color("success"), color("error")),
+];
 
 export default class Map extends Component {
   static uiName = t`Map`;
@@ -258,14 +264,12 @@ export default class Map extends Component {
       title: t`Color`,
       widget: ColorRangePicker,
       props: {
-        ranges: Object.values(desaturated).map(color =>
-          getColorplethColorScale(color),
-        ),
+        ranges: COLOR_RANGES,
         quantile: true,
         columns: 1,
       },
-      default: getColorplethColorScale(Object.values(desaturated)[0]),
-      getHidden: (series, vizSettings) => vizSettings["map.type"] !== "region",
+      default: COLOR_RANGES[0],
+      getHidden: (series, vizSettings) => vizSettings["map.type"] === "pin",
     },
     "map.zoom": {},
     "map.center_latitude": {},

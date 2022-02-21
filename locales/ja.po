@@ -7202,6 +7202,10 @@ msgstr "経度"
 msgid "Metric field"
 msgstr "メトリクスフィールド"
 
+#: frontend/src/metabase/visualizations/components/LeafletGridHeatMap.jsx:41
+msgid "Current position"
+msgstr "現在位置"
+
 #: frontend/src/metabase/visualizations/visualizations/Map.jsx:254
 msgid "Region field"
 msgstr "地域フィールド"

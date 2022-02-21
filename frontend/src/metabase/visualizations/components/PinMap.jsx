@@ -122,12 +122,29 @@ export default class PinMap extends Component {
       cols,
       col => col.name === settings["map.metric_column"],
     );
+    const createdAtIndex = _.findIndex(
+      cols,
+      col => col.name === settings["map.created_at_column"],
+    );
 
     const allPoints = rows.map(row => [
       row[latitudeIndex],
       row[longitudeIndex],
       metricIndex >= 0 ? row[metricIndex] : 1,
     ]);
+
+    // Set current time defaultly
+    const targetDateStr = new Date().toISOString();
+    const createdAtDates = rows.map(row => row[createdAtIndex]);
+    const targetDateIndex = getSpecificDateTimeIndex(
+      targetDateStr,
+      createdAtDates,
+    );
+    const currentRow = rows[targetDateIndex];
+    const currentPoint = [
+      currentRow[latitudeIndex],
+      currentRow[longitudeIndex],
+    ];
 
     // only use points with numeric coordinates & metric
     const points = allPoints.filter(
@@ -166,7 +183,7 @@ export default class PinMap extends Component {
       bounds._northEast.lat += binHeight;
     }
 
-    return { points, bounds, min, max, binWidth, binHeight };
+    return { points, bounds, min, max, binWidth, binHeight, currentPoint };
   }
 
   render() {
@@ -176,7 +193,15 @@ export default class PinMap extends Component {
 
     const Map = MAP_COMPONENTS_BY_TYPE[settings["map.pin_type"]];
 
-    const { points, bounds, min, max, binHeight, binWidth } = this.state;
+    const {
+      points,
+      bounds,
+      min,
+      max,
+      binHeight,
+      binWidth,
+      currentPoint,
+    } = this.state;
 
     return (
       <div
@@ -203,6 +228,7 @@ export default class PinMap extends Component {
             binWidth={binWidth}
             binHeight={binHeight}
             onFiltering={filtering => this.setState({ filtering })}
+            currentPoint={currentPoint}
           />
         ) : null}
         <div className="absolute top right m1 z2 flex flex-column hover-child">
@@ -242,4 +268,22 @@ export default class PinMap extends Component {
       </div>
     );
   }
+}
+
+function getSpecificDateTimeIndex(targetDateStr, dates) {
+  const targetDate = new Date(targetDateStr);
+  const targetDateTime = targetDate.getTime();
+  const targetDateIndex = dates.reduce((currentIndex, dateStr, index) => {
+    const dateTime = new Date(dateStr).getTime();
+    if (dateTime <= targetDateTime) {
+      const currentDateTime = new Date(dates[currentIndex]).getTime();
+      const diff = Math.abs(targetDateTime - dateTime);
+      const currentDiff = Math.abs(targetDateTime - currentDateTime);
+      if (diff < currentDiff) {
+        return index;
+      }
+    }
+    return currentIndex;
+  }, 0);
+  return targetDateIndex;
 }

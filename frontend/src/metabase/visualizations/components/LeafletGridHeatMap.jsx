@@ -7,6 +7,7 @@ import { color } from "metabase/lib/colors";
 import { rangeForValue } from "metabase/lib/dataset";
 import { isNumeric, isMetric } from "metabase/lib/schema_metadata";
 import { computeNumericDataInverval } from "../lib/numeric";
+import { MARKER_ICON } from "./LeafletMarkerPinMap";
 
 const isValidCoordinatesColumn = column =>
   column.binning_info || (column.source === "native" && isNumeric(column));
@@ -34,6 +35,11 @@ export default class LeafletGridHeatMap extends LeafletMap {
 
     this.gridLayer = L.layerGroup([]).addTo(this.map);
     this.componentDidUpdate({}, {});
+
+    L.marker(this.props.currentPoint, { icon: MARKER_ICON })
+      .addTo(this.map)
+      .bindPopup(t`Current position`)
+      .openPopup();
   }
 
   componentDidUpdate(prevProps, prevState) {

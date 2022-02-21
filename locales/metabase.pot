@@ -8172,6 +8172,10 @@ msgstr ""
 msgid "Metric field"
 msgstr ""
 
+#: frontend/src/metabase/visualizations/components/LeafletGridHeatMap.jsx:41
+msgid "Current position"
+msgstr ""
+
 #: frontend/src/metabase/visualizations/visualizations/Map.jsx:254
 msgid "Region field"
 msgstr ""

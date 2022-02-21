@@ -5,7 +5,7 @@ import { isPK } from "metabase/lib/schema_metadata";
 
 import _ from "underscore";
 
-const MARKER_ICON = L.icon({
+export const MARKER_ICON = L.icon({
   iconUrl: "app/assets/img/pin.png",
   iconSize: [28, 32],
   iconAnchor: [15, 24],

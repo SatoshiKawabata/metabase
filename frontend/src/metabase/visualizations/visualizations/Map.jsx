@@ -17,6 +17,7 @@ import {
   hasLatitudeAndLongitudeColumns,
   isState,
   isCountry,
+  isDate,
 } from "metabase/lib/schema_metadata";
 import { isSameSeries } from "metabase/visualizations/lib/utils";
 import {
@@ -231,6 +232,11 @@ export default class Map extends Component {
         !PIN_MAP_TYPES.has(vizSettings["map.type"]) ||
         (vizSettings["map.pin_type"] !== "heat" &&
           vizSettings["map.pin_type"] !== "grid"),
+    }),
+    ...fieldSetting("map.created_at_column", {
+      title: t`Created At field`,
+      fieldFilter: isDate,
+      getHidden: (series, vizSettings) => true,
     }),
     "map.region": {
       title: t`Region map`,

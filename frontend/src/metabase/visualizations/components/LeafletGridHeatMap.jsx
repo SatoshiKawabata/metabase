@@ -30,13 +30,18 @@ export default class LeafletGridHeatMap extends LeafletMap {
     );
   }
 
+  _currentPointMarker;
+
   componentDidMount() {
     super.componentDidMount();
 
     this.gridLayer = L.layerGroup([]).addTo(this.map);
     this.componentDidUpdate({}, {});
 
-    L.marker(this.props.currentPoint, { icon: MARKER_ICON })
+    // Show the current point
+    this._currentPointMarker = L.marker(this.props.currentPoint, {
+      icon: MARKER_ICON,
+    })
       .addTo(this.map)
       .bindPopup(t`Current position`)
       .openPopup();
@@ -107,6 +112,11 @@ export default class LeafletGridHeatMap extends LeafletMap {
             [latMax, lonMax],
           ]);
         }
+      }
+
+      // Update the current point
+      if (this._currentPointMarker) {
+        this._currentPointMarker.setLatLng(this.props.currentPoint);
       }
     } catch (err) {
       console.error(err);
